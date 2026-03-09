@@ -1,22 +1,24 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
 
 :root {
-  --primaryTextColor: #232e35; /* Untuk title atau judul */
-  --secondaryTextColor: #656d72; /* Untuk text biasa seperti paragraph contohnya */
+  --primaryTextColor: #111827; /* Neutral-900 */
+  --secondaryTextColor: #6b7280; /* Neutral-500 */
 
-  --borderColor: #f1f1f1;
-  --lineColor: #d9d9d9; /* untuk line di pre-title */
+  --borderColor: #e5e7eb; /* Neutral-200 */
+  --lineColor: #e5e7eb; /* Divider */
 
-  --primaryBackgroundColor: #fff;
-  --secondaryBackgroundColor: #fbfbfb;
-  --thirdBackgroundColor: #f5f3fe;
+  --primaryBackgroundColor: #ffffff;
+  --secondaryBackgroundColor: #f9fafb; /* Neutral-50 */
+  --thirdBackgroundColor: #eef2ff; /* Indigo-50 */
 
-  --primaryIconColor: #7e74f1;
-  --primaryIconColorHover: #5d51e8;
+  --primaryIconColor: #6366f1; /* Indigo-500 */
+  --primaryIconColorHover: #4f46e5; /* Indigo-600 */
 
   --sectionPadding: 6rem 0;
 
-  --itemBorderRadius: 0.7rem;
+  --itemBorderRadius: 14px;
+  --shadowSm: 0 1px 2px rgba(0,0,0,0.04);
+  --shadowMd: 0 6px 20px rgba(17, 24, 39, 0.08);
 }
 
 * {
@@ -27,7 +29,12 @@
 }
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: var(--primaryBackgroundColor);
+  color: var(--secondaryTextColor);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 80px; /* offset untuk navbar fixed */
 }
 
 h1,
@@ -86,8 +93,9 @@ a {
 
 /* Titles */
 .section-title {
-  margin: 1rem 0 4rem;
-  font-size: 2rem;
+  margin: 1rem 0 3rem;
+  font-size: 2.25rem;
+  letter-spacing: -0.02em;
 }
 
 .pre-title {
@@ -124,7 +132,18 @@ a {
 .nav {
   display: flex;
   justify-content: space-between;
-  padding: 2rem 0;
+  align-items: center;
+  padding: 1rem 5vw; /* beri padding horizontal agar konten center relatif viewport */
+  position: fixed; /* selalu di atas saat scroll */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid rgba(229,231,235,0.6);
+  z-index: 1000;
 }
 
 nav ul {
@@ -153,6 +172,23 @@ nav ul li {
 
 nav ul li a {
   color: var(--primaryTextColor);
+  padding: 0.5rem 0.25rem;
+  position: relative;
+}
+
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--primaryIconColor);
+  transition: width 0.25s ease;
+}
+
+nav ul li a:hover::after {
+  width: 100%;
 }
 
 /* Burger - Save for later on video */
@@ -175,10 +211,9 @@ nav ul li a {
 
 /* Hero Section */
 #hero {
-  height: 720px;
+  min-height: 88vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  /* We're not going to use automatic template columns, because we need to know when the columns is go below. So we can exchange the order of the element */
   align-items: center;
 }
 
@@ -238,21 +273,21 @@ nav ul li a {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 120px;
-  height: 40px;
-  background: #7e74f1;
+  padding: 0.75rem 1.2rem;
+  background: var(--primaryIconColor);
   color: #fff;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 10px;
+  font-size: 0.95rem;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
+  box-shadow: var(--shadowSm);
 }
 
 .btn-box a:hover {
-  background: transparent;
-  color: #7e74f1;
-  border: 2px solid #7e74f1;
+  transform: translateY(-1px);
+  background: var(--primaryIconColorHover);
+  box-shadow: var(--shadowMd);
 }
 
 /* Hero kanan: gambar */
@@ -266,10 +301,10 @@ nav ul li a {
 .hero-right img {
   width: 320px;
   height: 320px;
-  border-radius: 50%;
+  border-radius: 24px;
   object-fit: cover;
-  border: 5px solid var(--primaryIconColor);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: 0;
+  box-shadow: var(--shadowMd);
 }
 
 /* ===== Responsive Design ===== */
@@ -327,10 +362,17 @@ nav ul li a {
 }
 
 .service {
-  padding: 3rem 2rem;
+  padding: 2rem 1.5rem;
   text-align: center;
   background: var(--primaryBackgroundColor);
   border-radius: var(--itemBorderRadius);
+  border: 1px solid var(--borderColor);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.service:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadowMd);
 }
 
 .service h4 {
@@ -370,8 +412,14 @@ nav ul li a {
 
 .portfolio {
   border-radius: var(--itemBorderRadius);
-  overflow: hidden; /* supaya gambar yang diatas itu dia ngikut border radiusnya, karena yang dikasih border radius disini adalah div portfolio ini */
+  overflow: hidden;
   border: 1px solid var(--borderColor);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.portfolio:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadowMd);
 }
 
 .portfolio-cover {
@@ -479,8 +527,13 @@ nav ul li a {
 /* Right side of Skills */
 .skills-list {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: 0.5rem 1.5rem;
   margin-top: 1.5rem;
+}
+
+.skills-right ul li::marker {
+  color: var(--primaryIconColor);
 }
 
 .skills-right ul {
@@ -569,9 +622,10 @@ nav ul li a {
 
 /* Footer Section */
 footer {
-  padding: 4rem 0;
+  padding: 3rem 0;
   background: var(--secondaryBackgroundColor);
   text-align: center;
+  border-top: 1px solid var(--borderColor);
 }
 
 .footer-icons {
